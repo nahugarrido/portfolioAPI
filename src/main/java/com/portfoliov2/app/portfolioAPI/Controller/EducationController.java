@@ -37,5 +37,12 @@ public class EducationController {
         educationRepository.save(updatedEducation);
         return "Updated education";
     }
+
+    @DeleteMapping(value = "education/delete/{id}")
+    public String deleteEducation(@PathVariable long id) {
+        Education deletedEducation = educationRepository.getReferenceById(id);
+        educationRepository.delete(deletedEducation);
+        return "deleted education";
+    }
 }
 

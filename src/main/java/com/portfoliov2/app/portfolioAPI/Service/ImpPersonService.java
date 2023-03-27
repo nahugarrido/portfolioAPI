@@ -1,6 +1,7 @@
 package com.portfoliov2.app.portfolioAPI.Service;
 import com.portfoliov2.app.portfolioAPI.Entity.Person;
 import com.portfoliov2.app.portfolioAPI.Interface.IPersonService;
+import com.portfoliov2.app.portfolioAPI.Interface.ISocialService;
 import com.portfoliov2.app.portfolioAPI.Repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,9 @@ public class ImpPersonService implements IPersonService {
 
     @Autowired
     PersonRepository personRepository;
+
+    @Autowired
+    ISocialService iSocialService;
 
     @Override
     public List<Person> getPersons() {

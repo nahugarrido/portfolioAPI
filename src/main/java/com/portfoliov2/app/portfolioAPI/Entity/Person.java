@@ -34,6 +34,9 @@ public class Person {
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Project> projects = new ArrayList<>();
 
+    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Social social;
+
     public List<Education> getEducations() {
         return educations;
     }
@@ -44,6 +47,14 @@ public class Person {
 
     public void setProjects(List<Project> projects) {
         this.projects = projects;
+    }
+
+    public Social getSocial() {
+        return social;
+    }
+
+    public void setSocial(Social social) {
+        this.social = social;
     }
 
     public void setEducations(List<Education> educations) {

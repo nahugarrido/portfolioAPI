@@ -8,6 +8,8 @@ import com.portfoliov2.app.portfolioAPI.Repository.SocialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ImpSocialService implements ISocialService {
 
@@ -15,6 +17,22 @@ public class ImpSocialService implements ISocialService {
     SocialRepository socialRepository;
     @Autowired
     PersonRepository personRepository;
+
+    @Override
+    public List<Social> getSocials() {
+        return socialRepository.findAll();
+    }
+
+    @Override
+    public String saveSocial(Long user_id) {
+        Social social = new Social();
+        Person person = personRepository.findById(user_id).orElse(null);
+        social.setPerson(person);
+        //person.setSocial(social);
+        personRepository.save(person);
+        socialRepository.save(social);
+        return "Saved social";
+    }
 
     @Override
     public String updateSocial(Long user_id, Social social) {

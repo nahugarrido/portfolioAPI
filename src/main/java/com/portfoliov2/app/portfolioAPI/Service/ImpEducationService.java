@@ -3,8 +3,8 @@ package com.portfoliov2.app.portfolioAPI.Service;
 import com.portfoliov2.app.portfolioAPI.Entity.Education;
 import com.portfoliov2.app.portfolioAPI.Entity.Person;
 import com.portfoliov2.app.portfolioAPI.Interface.IEducationService;
+import com.portfoliov2.app.portfolioAPI.Interface.IPersonService;
 import com.portfoliov2.app.portfolioAPI.Repository.EducationRepository;
-import com.portfoliov2.app.portfolioAPI.Repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class ImpEducationService implements IEducationService {
     EducationRepository educationRepository;
 
     @Autowired
-    PersonRepository personRepository;
+    IPersonService iPersonService;
 
     @Override
     public List<Education> getEducations() {
@@ -26,13 +26,21 @@ public class ImpEducationService implements IEducationService {
 
     @Override
     public String saveEducation(Education education, Long user_id) {
-        Person person = personRepository.findById(user_id).orElse(null);
+        Person person = iPersonService.getPersonById(user_id);
         person.getEducations().add(education);
         education.setPerson(person);
-        personRepository.save(person);
         educationRepository.save(education);
         return "Saved education";
     }
+
+//    public String saveEducation(Education education, Long user_id) {
+//        Person person = personRepository.findById(user_id).orElse(null);
+//        person.getEducations().add(education);
+//        education.setPerson(person);
+//        personRepository.save(person);
+//        educationRepository.save(education);
+//        return "Saved education";
+//    }
 
     @Override
     public String updateEducation(long id, Education education) {

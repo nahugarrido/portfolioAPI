@@ -19,6 +19,7 @@ public class ImpPersonService implements IPersonService {
 
     @Override
     public List<Person> getPersons() {
+
         return personRepository.findAll();
     }
 
@@ -30,6 +31,7 @@ public class ImpPersonService implements IPersonService {
     @Override
     public String savePerson(Person person) {
         personRepository.save(person);
+        iSocialService.saveSocial(person.getId());
         return "Saved person";
     }
 

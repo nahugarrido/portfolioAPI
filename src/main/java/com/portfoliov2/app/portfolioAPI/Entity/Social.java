@@ -20,9 +20,21 @@ public class Social {
     private String twitter;
 
     @OneToOne(fetch = FetchType.LAZY)
+    // @MapsId  remove @JsonIgnore
     @JsonIgnore
     @JoinColumn(name = "person_id")
     Person person;
+    public Social() {
+
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
 
     public String getGithub() {
         return github;

@@ -36,8 +36,16 @@ public class ImpSocialService implements ISocialService {
 
     @Override
     public String updateSocial(Long user_id, Social social) {
-        Person UpdatedPerson = personRepository.getReferenceById(user_id);
-        UpdatedPerson.setSocial(social);
+        Person person = personRepository.getReferenceById(user_id);
+        Social socialAux = person.getSocial();
+        Long id = socialAux.getId();
+        Social updatedSocial = socialRepository.getReferenceById(id);
+        updatedSocial.setInstagram(social.getInstagram());
+        updatedSocial.setGithub(social.getGithub());
+        updatedSocial.setTwitter(social.getTwitter());
+        updatedSocial.setLinkedin(social.getLinkedin());
+
+        socialRepository.save(updatedSocial);
         return "Updated social information";
     }
 }

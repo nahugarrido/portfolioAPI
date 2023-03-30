@@ -28,14 +28,26 @@ public class Person {
     @Column(name = "profileImg")
     private String profileImg;
 
+    /// save the ids of the svg images that should be displayed in the portfolio
+    @Column(name = "skills")
+    private ArrayList<Integer> skills;
+
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Education> educations = new ArrayList<>();
-
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Project> projects = new ArrayList<>();
-
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Experience> experiences;
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
     private Social social;
+
+    public ArrayList<Integer> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(ArrayList<Integer> skills) {
+        this.skills = skills;
+    }
 
     public List<Education> getEducations() {
         return educations;
@@ -103,5 +115,13 @@ public class Person {
 
     public void setProfileImg(String profileImg) {
         this.profileImg = profileImg;
+    }
+
+    public List<Experience> getExperiences() {
+        return experiences;
+    }
+
+    public void setExperiences(List<Experience> experiences) {
+        this.experiences = experiences;
     }
 }

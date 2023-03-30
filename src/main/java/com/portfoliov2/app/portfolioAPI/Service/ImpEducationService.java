@@ -33,14 +33,6 @@ public class ImpEducationService implements IEducationService {
         return "Saved education";
     }
 
-//    public String saveEducation(Education education, Long user_id) {
-//        Person person = personRepository.findById(user_id).orElse(null);
-//        person.getEducations().add(education);
-//        education.setPerson(person);
-//        personRepository.save(person);
-//        educationRepository.save(education);
-//        return "Saved education";
-//    }
 
     @Override
     public String updateEducation(long id, Education education) {
@@ -50,7 +42,9 @@ public class ImpEducationService implements IEducationService {
         updatedEducation.setInstitution(education.getInstitution());
         updatedEducation.setStartDate(education.getStartDate());
         updatedEducation.setFinishDate(education.getFinishDate());
-
+        updatedEducation.setImg(education.getImg());
+        updatedEducation.setHidden(education.isHidden());
+        updatedEducation.setPriority(education.getPriority());
         educationRepository.save(updatedEducation);
         return "Updated education";
     }

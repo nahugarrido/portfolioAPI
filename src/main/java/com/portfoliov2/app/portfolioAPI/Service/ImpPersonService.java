@@ -1,4 +1,5 @@
 package com.portfoliov2.app.portfolioAPI.Service;
+
 import com.portfoliov2.app.portfolioAPI.Entity.Person;
 import com.portfoliov2.app.portfolioAPI.Interface.IPersonService;
 import com.portfoliov2.app.portfolioAPI.Interface.ISocialService;
@@ -43,6 +44,7 @@ public class ImpPersonService implements IPersonService {
         updatedPerson.setDescription(person.getDescription());
         updatedPerson.setProfileImg(person.getProfileImg());
         updatedPerson.setSeniority(person.getSeniority());
+        updatedPerson.setSkills(person.getSkills());
         personRepository.save(updatedPerson);
         return "Updated person";
     }

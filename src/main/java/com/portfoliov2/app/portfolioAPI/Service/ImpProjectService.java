@@ -41,14 +41,16 @@ public class ImpProjectService implements IProjectService {
 
     @Override
     public String updateProject(Long id, Project project) {
-        Project UpdatedProject = projectRepository.getReferenceById(id);
-        UpdatedProject.setDescription(project.getDescription());
-        UpdatedProject.setCategory(project.getCategory());
-        UpdatedProject.setImg(project.getImg());
-        UpdatedProject.setTitle(project.getTitle());
-        UpdatedProject.setRepositoryLink(project.getRepositoryLink());
-        UpdatedProject.setLiveSourceLink(project.getLiveSourceLink());
-        projectRepository.save(UpdatedProject);
+        Project updatedProject = projectRepository.getReferenceById(id);
+        updatedProject.setDescription(project.getDescription());
+        updatedProject.setCategory(project.getCategory());
+        updatedProject.setImg(project.getImg());
+        updatedProject.setTitle(project.getTitle());
+        updatedProject.setRepositoryLink(project.getRepositoryLink());
+        updatedProject.setLiveSourceLink(project.getLiveSourceLink());
+        updatedProject.setPriority(project.getPriority());
+        updatedProject.setHidden(project.isHidden());
+        projectRepository.save(updatedProject);
         return "Updated project";
     }
 }

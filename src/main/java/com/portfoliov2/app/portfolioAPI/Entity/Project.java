@@ -19,6 +19,27 @@ public class Project {
     private String liveSourceLink;
     @Column(name = "title")
     private String title;
+    @Column(name = "boolHidden")
+    private boolean hidden;
+
+    @Column(name = "priority")
+    private int priority;
+
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
 
     public Long getId() {
         return id;

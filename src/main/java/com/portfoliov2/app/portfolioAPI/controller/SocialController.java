@@ -1,7 +1,7 @@
-package com.portfoliov2.app.portfolioAPI.Controller;
+package com.portfoliov2.app.portfolioAPI.controller;
 
-import com.portfoliov2.app.portfolioAPI.Entity.Social;
-import com.portfoliov2.app.portfolioAPI.Interface.ISocialService;
+import com.portfoliov2.app.portfolioAPI.entity.Social;
+import com.portfoliov2.app.portfolioAPI.interfaces.ISocialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

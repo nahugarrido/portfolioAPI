@@ -1,7 +1,7 @@
-package com.portfoliov2.app.portfolioAPI.Controller;
+package com.portfoliov2.app.portfolioAPI.controller;
 
-import com.portfoliov2.app.portfolioAPI.Entity.Person;
-import com.portfoliov2.app.portfolioAPI.Interface.IPersonService;
+import com.portfoliov2.app.portfolioAPI.entity.Person;
+import com.portfoliov2.app.portfolioAPI.interfaces.IPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

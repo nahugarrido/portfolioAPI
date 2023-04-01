@@ -1,4 +1,4 @@
-package com.portfoliov2.app.portfolioAPI.Entity;
+package com.portfoliov2.app.portfolioAPI.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

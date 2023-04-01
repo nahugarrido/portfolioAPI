@@ -1,10 +1,10 @@
-package com.portfoliov2.app.portfolioAPI.Service;
+package com.portfoliov2.app.portfolioAPI.service;
 
-import com.portfoliov2.app.portfolioAPI.Entity.Experience;
-import com.portfoliov2.app.portfolioAPI.Entity.Person;
-import com.portfoliov2.app.portfolioAPI.Interface.IExperienceService;
-import com.portfoliov2.app.portfolioAPI.Interface.IPersonService;
-import com.portfoliov2.app.portfolioAPI.Repository.ExperienceRepository;
+import com.portfoliov2.app.portfolioAPI.entity.Experience;
+import com.portfoliov2.app.portfolioAPI.entity.Person;
+import com.portfoliov2.app.portfolioAPI.interfaces.IExperienceService;
+import com.portfoliov2.app.portfolioAPI.interfaces.IPersonService;
+import com.portfoliov2.app.portfolioAPI.repository.ExperienceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

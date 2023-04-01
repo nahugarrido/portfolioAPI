@@ -1,21 +1,24 @@
-package com.portfoliov2.app.portfolioAPI.Entity;
-
+package com.portfoliov2.app.portfolioAPI.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+/// I'm using @Table and @Column as a good practice
 @Entity
-@Table(name = "Experience")
-public class Experience {
+@Table(name = "Education")
+public class Education {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
+
+    @Column(name = "title")
+    private String title;
+
     @Column(name = "img")
     private String img;
-    @Column(name = "company")
-    private String company;
-    @Column(name = "position")
-    private String position;
 
+    @Column(name = "institution")
+    private String institution;
     @Column(name = "description")
     private String description;
 
@@ -26,7 +29,6 @@ public class Experience {
     // This data type need to be changed to a date type
     @Column(name = "finish_date")
     private String finishDate;
-
     @Column(name = "hidden")
     private boolean hidden;
 
@@ -35,51 +37,43 @@ public class Experience {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
-    @JoinColumn(name = "person")
+    @JoinColumn(name = "person_id")
     private Person person;
 
-    public boolean isHidden() {
-        return hidden;
-    }
-
-    public void setHidden(boolean hidden) {
-        this.hidden = hidden;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Long getId() {
+    public long getId() {
         return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getImg() {
         return img;
     }
 
-    public String getCompany() {
-        return company;
+    public void setImg(String img) {
+        this.img = img;
     }
 
-    public String getPosition() {
-        return position;
+    public String getInstitution() {
+        return institution;
+    }
+
+    public void setInstitution(String institution) {
+        this.institution = institution;
     }
 
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getStartDate() {
@@ -98,19 +92,27 @@ public class Experience {
         this.finishDate = finishDate;
     }
 
-    public int getPriority() {
-        return priority;
-    }
-
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
-
     public Person getPerson() {
         return person;
     }
 
     public void setPerson(Person person) {
         this.person = person;
+    }
+
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 }

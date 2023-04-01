@@ -1,6 +1,6 @@
-package com.portfoliov2.app.portfolioAPI.Interface;
+package com.portfoliov2.app.portfolioAPI.interfaces;
 
-import com.portfoliov2.app.portfolioAPI.Entity.Education;
+import com.portfoliov2.app.portfolioAPI.entity.Education;
 import org.springframework.stereotype.Service;
 import java.util.List;
 

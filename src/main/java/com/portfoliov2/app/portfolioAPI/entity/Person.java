@@ -1,4 +1,4 @@
-package com.portfoliov2.app.portfolioAPI.Entity;
+package com.portfoliov2.app.portfolioAPI.entity;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;

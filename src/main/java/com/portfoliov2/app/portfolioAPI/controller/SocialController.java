@@ -8,16 +8,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/social")
 public class SocialController {
     @Autowired
     ISocialService iSocialService;
 
-    @GetMapping(value = "/social")
+    @GetMapping
     public List<Social> getSocials() {
         return iSocialService.getSocials();
     }
 
-    @PutMapping(value = "/social/update/{id}")
+    @PutMapping(value = "/update/{id}")
     public String updateSocial(@PathVariable Long id, @RequestBody Social social) {
        return iSocialService.updateSocial(id, social);
     }

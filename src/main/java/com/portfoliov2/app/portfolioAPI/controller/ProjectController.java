@@ -8,27 +8,28 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("showcase")
 public class ProjectController {
 
     @Autowired
     IProjectService iProjectService;
 
-    @GetMapping(value = "/showcase")
+    @GetMapping
     public List<Project> getProjects1() {
         return iProjectService.getProjects();
     }
 
-    @PostMapping(value = "/showcase/{user_id}/create")
+    @PostMapping(value = "/{user_id}/create")
     public String saveProject(@RequestBody Project project, @PathVariable Long user_id) {
         return iProjectService.saveProject(project, user_id);
     }
 
-    @PutMapping(value = "showcase/update/{id}")
+    @PutMapping(value = "/update/{id}")
     public String updateProject(@PathVariable Long id, @RequestBody Project project) {
         return iProjectService.updateProject(id, project);
     }
 
-    @DeleteMapping(value = "showcase/delete/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     public String deleteProject(@PathVariable Long id) {
         return iProjectService.deleteProject(id);
     }

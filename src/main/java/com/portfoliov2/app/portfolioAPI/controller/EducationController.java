@@ -8,27 +8,28 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/educations")
 public class EducationController {
 
     @Autowired
     private IEducationService iEducationService;
 
-    @GetMapping(value = "/education")
+    @GetMapping
     public List<Education> getEducations() {
         return iEducationService.getEducations();
     }
 
-    @PostMapping(value = "/education/{user_id}/create")
+    @PostMapping(value = "/{user_id}/create")
     public String saveEducation(@RequestBody Education education, @PathVariable Long user_id) {
         return iEducationService.saveEducation(education, user_id);
     }
 
-    @PutMapping(value = "education/update/{id}")
+    @PutMapping(value = "/update/{id}")
     public String updateEducation(@PathVariable long id, @RequestBody Education education) {
         return iEducationService.updateEducation(id, education);
     }
 
-    @DeleteMapping(value = "education/delete/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     public String deleteEducation(@PathVariable long id) {
         return iEducationService.deleteEducation(id);
     }

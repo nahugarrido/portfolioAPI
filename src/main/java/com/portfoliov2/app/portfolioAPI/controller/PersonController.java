@@ -8,32 +8,33 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/persons")
 public class PersonController {
 
     @Autowired
     IPersonService iPersonService;
 
-    @GetMapping(value="/person")
+    @GetMapping
     public List<Person> getPersons() {
         return iPersonService.getPersons();
     }
 
-    @GetMapping(value = "/person/{user_id}")
+    @GetMapping(value = "/{user_id}")
     public Person getPersonById(@PathVariable Long user_id) {
         return iPersonService.getPersonById(user_id);
     }
 
-    @PostMapping(value = "/person/create")
+    @PostMapping(value = "/create")
     public String savePerson(@RequestBody Person person) {
         return iPersonService.savePerson(person);
     }
 
-    @PutMapping(value = "/person/update/{id}")
+    @PutMapping(value = "/update/{id}")
     public String updatePerson(@PathVariable long id, @RequestBody Person person) {
         return iPersonService.updatePerson(id, person);
     }
 
-    @DeleteMapping(value = "/person/delete/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     public String deletePerson(@PathVariable long id) {
         return iPersonService.deletePerson(id);
     }

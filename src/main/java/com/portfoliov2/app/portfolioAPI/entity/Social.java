@@ -3,6 +3,7 @@ package com.portfoliov2.app.portfolioAPI.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+/// I'm using @Table and @Column as a good practice
 @Entity
 @Table(name = "Social")
 public class Social {

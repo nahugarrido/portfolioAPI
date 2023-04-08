@@ -3,6 +3,8 @@ package com.portfoliov2.app.portfolioAPI.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "Experience")
 public class Experience {
@@ -19,13 +21,13 @@ public class Experience {
     @Column(name = "description")
     private String description;
 
-    // This data type need to be changed to a date type
+    // Date format = "2023-04-04"
     @Column(name = "start_date")
-    private String startDate;
+    Date startDate;
 
-    // This data type need to be changed to a date type
+    // Date format = "2023-04-04"
     @Column(name = "finish_date")
-    private String finishDate;
+    Date finishDate;
 
     @Column(name = "hidden")
     private boolean hidden;
@@ -82,19 +84,19 @@ public class Experience {
         return description;
     }
 
-    public String getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public String getFinishDate() {
+    public Date getFinishDate() {
         return finishDate;
     }
 
-    public void setFinishDate(String finishDate) {
+    public void setFinishDate(Date finishDate) {
         this.finishDate = finishDate;
     }
 

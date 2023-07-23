@@ -1,0 +1,116 @@
+package com.portfoliov2.app.portfolioAPI.project.entity;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.portfoliov2.app.portfolioAPI.person.entity.PersonEntity;
+import jakarta.persistence.*;
+
+/// I'm using @Table and @Column as a good practice
+@Entity
+@Table(name = "Project")
+public class ProjectEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name = "img")
+    private String img;
+    @Column(name = "repositoryLink")
+    private String repositoryLink;
+    @Column(name = "liveSourceLink")
+    private String liveSourceLink;
+    @Column(name = "title")
+    private String title;
+    @Column(name = "boolHidden")
+    private boolean hidden;
+
+    @Column(name = "priority")
+    private int priority;
+
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public String getRepositoryLink() {
+        return repositoryLink;
+    }
+
+    public void setRepositoryLink(String repositoryLink) {
+        this.repositoryLink = repositoryLink;
+    }
+
+    public String getLiveSourceLink() {
+        return liveSourceLink;
+    }
+
+    public void setLiveSourceLink(String liveSourceLink) {
+        this.liveSourceLink = liveSourceLink;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public PersonEntity getPerson() {
+        return person;
+    }
+
+    public void setPerson(PersonEntity person) {
+        this.person = person;
+    }
+
+    @Column(name = "description")
+    private String description;
+    @Column(name = "category")
+    private String category;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinColumn(name = "person_id")
+    private PersonEntity person;
+
+
+}

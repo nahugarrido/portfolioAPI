@@ -1,24 +1,26 @@
 package com.portfoliov2.app.portfolioAPI.person.service;
 
+import com.portfoliov2.app.portfolioAPI.person.dto.PersonDTO;
+import com.portfoliov2.app.portfolioAPI.person.dto.PersonSaveDTO;
 import com.portfoliov2.app.portfolioAPI.person.entity.PersonEntity;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
-@Service
 public interface IPersonService {
     // Get all persons
-    List<PersonEntity> getPersons();
+    List<PersonDTO> getPersons();
 
     // Get a specific person
-    PersonEntity getPersonById(Long user_id);
+    PersonDTO getPersonById(Long user_id);
+    PersonEntity getPersonEntityById(Long user_id);
 
     // Save a new person
-    String savePerson(PersonEntity person);
+    PersonDTO savePerson(PersonSaveDTO person);
 
     // Update an existing person
-    String updatePerson(long id, PersonEntity person);
+    PersonDTO updatePerson(Long id, PersonDTO person);
 
     // Delete a person
-    String deletePerson(long id);
+    String deletePerson(Long id);
 
 }

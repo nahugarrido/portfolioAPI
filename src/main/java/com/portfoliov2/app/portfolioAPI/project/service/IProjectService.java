@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface IProjectService {
     // get all projects
     List<ProjectEntity> getProjects();

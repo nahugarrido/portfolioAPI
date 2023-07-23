@@ -1,7 +1,7 @@
 package com.portfoliov2.app.portfolioAPI.social.service;
 
 import com.portfoliov2.app.portfolioAPI.person.entity.PersonEntity;
-import com.portfoliov2.app.portfolioAPI.exceptions.PortfolioExceptions;
+import com.portfoliov2.app.portfolioAPI.exceptions.PortfolioException;
 import com.portfoliov2.app.portfolioAPI.person.repository.PersonRepository;
 import com.portfoliov2.app.portfolioAPI.social.entity.SocialEntity;
 import com.portfoliov2.app.portfolioAPI.social.repository.SocialRepository;
@@ -41,7 +41,7 @@ public class ImpSocialService implements ISocialService {
         PersonEntity person = personRepository.findById(user_id).orElse(null);
 
         if(person == null) {
-            throw new PortfolioExceptions("Person not found", HttpStatus.NOT_FOUND);
+            throw new PortfolioException("Person not found", HttpStatus.NOT_FOUND);
         }
 
         SocialEntity socialAux = person.getSocial();

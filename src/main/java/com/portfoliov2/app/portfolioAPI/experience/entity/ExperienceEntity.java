@@ -1,27 +1,26 @@
 package com.portfoliov2.app.portfolioAPI.experience.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.portfoliov2.app.portfolioAPI.person.entity.PersonEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "Experience")
+@Table(name = "experience")
 public class ExperienceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private boolean show;
+    private boolean hidden;
 
     private int priority;
 
@@ -35,14 +34,16 @@ public class ExperienceEntity {
 
     // Date format = "2023-04-04"
     @Column(name = "start_date")
-    Date startDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private Date startDate;
 
     // Date format = "2023-04-04"
     @Column(name = "finish_date")
-    Date finishDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private Date finishDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
-    @JoinColumn(name = "person")
+    @JoinColumn(name = "person_id")
     private PersonEntity person;
 }

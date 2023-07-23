@@ -3,7 +3,7 @@ package com.portfoliov2.app.portfolioAPI.education.service;
 import com.portfoliov2.app.portfolioAPI.education.entity.EducationEntity;
 import com.portfoliov2.app.portfolioAPI.education.repository.EducationRepository;
 import com.portfoliov2.app.portfolioAPI.person.entity.PersonEntity;
-import com.portfoliov2.app.portfolioAPI.exceptions.PortfolioExceptions;
+import com.portfoliov2.app.portfolioAPI.exceptions.PortfolioException;
 import com.portfoliov2.app.portfolioAPI.person.service.IPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +30,7 @@ public class ImpEducationService implements IEducationService {
 
     @Override
     public String saveEducation(EducationEntity education, Long user_id) {
-        PersonEntity person = iPersonService.getPersonById(user_id);
+        PersonEntity person = iPersonService.getPersonEntityById(user_id);
         person.getEducations().add(education);
         education.setPerson(person);
         educationRepository.save(education);
@@ -43,7 +43,7 @@ public class ImpEducationService implements IEducationService {
         EducationEntity updatedEducation = educationRepository.findById(id).orElse(null);
 
         if(updatedEducation == null) {
-            throw new PortfolioExceptions("Education not found", HttpStatus.NOT_FOUND);
+            throw new PortfolioException("Education not found", HttpStatus.NOT_FOUND);
         }
 
         updatedEducation.setTitle(education.getTitle());
@@ -53,6 +53,7 @@ public class ImpEducationService implements IEducationService {
         updatedEducation.setFinishDate(education.getFinishDate());
         updatedEducation.setImg(education.getImg());
         updatedEducation.setHidden(education.isHidden());
+        ///updatedEducation.setShow(education.isShow());
         updatedEducation.setPriority(education.getPriority());
 
         educationRepository.save(updatedEducation);
@@ -64,7 +65,7 @@ public class ImpEducationService implements IEducationService {
         EducationEntity deletedEducation = educationRepository.findById(id).orElse(null);
 
         if(deletedEducation == null) {
-            throw new PortfolioExceptions("Education not found", HttpStatus.NOT_FOUND);
+            throw new PortfolioException("Education not found", HttpStatus.NOT_FOUND);
         }
 
 

@@ -5,9 +5,7 @@ import lombok.Data;
 import java.util.ArrayList;
 
 @Data
-public class PersonDTO {
-    private long id;
-
+public class PersonSaveDTO {
     private String name;
 
     private String lastName;

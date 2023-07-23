@@ -2,11 +2,11 @@ package com.portfoliov2.app.portfolioAPI.exceptions;
 
 import org.springframework.http.HttpStatus;
 
-public class PortfolioExceptions extends RuntimeException{
+public class PortfolioException extends RuntimeException{
     private String message;
     private HttpStatus httpStatus;
 
-    public PortfolioExceptions(String message, HttpStatus httpStatus) {
+    public PortfolioException(String message, HttpStatus httpStatus) {
         super(message);
         this.message = message;
         this.httpStatus = httpStatus;

@@ -3,7 +3,7 @@ package com.portfoliov2.app.portfolioAPI.experience.service;
 import com.portfoliov2.app.portfolioAPI.experience.entity.ExperienceEntity;
 import com.portfoliov2.app.portfolioAPI.experience.repository.ExperienceRepository;
 import com.portfoliov2.app.portfolioAPI.person.entity.PersonEntity;
-import com.portfoliov2.app.portfolioAPI.exceptions.PortfolioExceptions;
+import com.portfoliov2.app.portfolioAPI.exceptions.PortfolioException;
 import com.portfoliov2.app.portfolioAPI.person.service.IPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +30,7 @@ public class ImpExperienceService implements IExperienceService {
 
     @Override
     public String saveExperience(ExperienceEntity experience, Long user_id) {
-        PersonEntity person = iPersonService.getPersonById(user_id);
+        PersonEntity person = iPersonService.getPersonEntityById(user_id);
         person.getExperiences().add(experience);
         experience.setPerson(person);
         experienceRepository.save(experience);
@@ -42,7 +42,7 @@ public class ImpExperienceService implements IExperienceService {
         ExperienceEntity updatedExperience = experienceRepository.findById(id).orElse(null);
 
         if(updatedExperience == null) {
-            throw new PortfolioExceptions("Experience not found", HttpStatus.NOT_FOUND);
+            throw new PortfolioException("Experience not found", HttpStatus.NOT_FOUND);
         }
 
         updatedExperience.setCompany(experience.getCompany());
@@ -51,6 +51,7 @@ public class ImpExperienceService implements IExperienceService {
         updatedExperience.setImg(experience.getImg());
         updatedExperience.setPosition(experience.getPosition());
         updatedExperience.setHidden(experience.isHidden());
+        ///updatedExperience.setShow(experience.isShow());
         updatedExperience.setStartDate(experience.getStartDate());
         updatedExperience.setPriority(experience.getPriority());
 
@@ -63,7 +64,7 @@ public class ImpExperienceService implements IExperienceService {
         ExperienceEntity deletedExperience = experienceRepository.findById(id).orElse(null);
 
         if(deletedExperience == null) {
-            throw new PortfolioExceptions("Experience not found", HttpStatus.NOT_FOUND);
+            throw new PortfolioException("Experience not found", HttpStatus.NOT_FOUND);
         }
 
         experienceRepository.delete(deletedExperience);

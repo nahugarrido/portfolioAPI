@@ -1,7 +1,7 @@
 package com.portfoliov2.app.portfolioAPI.project.service;
 
 import com.portfoliov2.app.portfolioAPI.person.entity.PersonEntity;
-import com.portfoliov2.app.portfolioAPI.exceptions.PortfolioExceptions;
+import com.portfoliov2.app.portfolioAPI.exceptions.PortfolioException;
 import com.portfoliov2.app.portfolioAPI.person.service.IPersonService;
 import com.portfoliov2.app.portfolioAPI.project.entity.ProjectEntity;
 import com.portfoliov2.app.portfolioAPI.project.repository.ProjectRepository;
@@ -26,7 +26,7 @@ public class ImpProjectService implements IProjectService {
 
     @Override
     public String saveProject(ProjectEntity project, Long user_id) {
-        PersonEntity person = iPersonService.getPersonById(user_id);
+        PersonEntity person = iPersonService.getPersonEntityById(user_id);
         person.getProjects().add(project);
         project.setPerson(person);
         projectRepository.save(project);
@@ -38,7 +38,7 @@ public class ImpProjectService implements IProjectService {
         ProjectEntity deletedProject = projectRepository.findById(id).orElse(null);
 
         if(deletedProject == null) {
-            throw new PortfolioExceptions("Project not found", HttpStatus.NOT_FOUND);
+            throw new PortfolioException("Project not found", HttpStatus.NOT_FOUND);
         }
 
         projectRepository.delete(deletedProject);
@@ -50,7 +50,7 @@ public class ImpProjectService implements IProjectService {
         ProjectEntity updatedProject = projectRepository.findById(id).orElse(null);
 
         if(updatedProject == null) {
-            throw new PortfolioExceptions("Project not found", HttpStatus.NOT_FOUND);
+            throw new PortfolioException("Project not found", HttpStatus.NOT_FOUND);
         }
 
         updatedProject.setDescription(project.getDescription());
@@ -61,6 +61,7 @@ public class ImpProjectService implements IProjectService {
         updatedProject.setLiveSourceLink(project.getLiveSourceLink());
         updatedProject.setPriority(project.getPriority());
         updatedProject.setHidden(project.isHidden());
+        //updatedProject.setShow(project.isShow());
 
         projectRepository.save(updatedProject);
         return "Updated project";

@@ -4,7 +4,6 @@ import com.portfoliov2.app.portfolioAPI.education.entity.EducationEntity;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
-@Service
 public interface IEducationService {
 
     // Get all educations

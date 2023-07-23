@@ -1,10 +1,13 @@
 package com.portfoliov2.app.portfolioAPI.person.controller;
 
-import com.portfoliov2.app.portfolioAPI.person.entity.PersonEntity;
+import com.portfoliov2.app.portfolioAPI.person.dto.PersonDTO;
+import com.portfoliov2.app.portfolioAPI.person.dto.PersonSaveDTO;
 import com.portfoliov2.app.portfolioAPI.person.service.IPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -15,29 +18,30 @@ public class PersonController {
     IPersonService iPersonService;
 
     @GetMapping
-    public List<PersonEntity> getPersons() {
-        return iPersonService.getPersons();
+    public ResponseEntity<List<PersonDTO>> getPersons() {
+        return ResponseEntity.ok().body(iPersonService.getPersons());
     }
 
     @GetMapping(value = "/{user_id}")
-    public PersonEntity getPersonById(@PathVariable Long user_id) {
-        return iPersonService.getPersonById(user_id);
+    public ResponseEntity<PersonDTO> getPersonById(@PathVariable Long user_id) {
+        return ResponseEntity.ok().body(iPersonService.getPersonById(user_id));
     }
 
     @PostMapping(value = "/create")
-    public String savePerson(@RequestBody PersonEntity person) {
-        return iPersonService.savePerson(person);
+    public ResponseEntity<PersonDTO> savePerson(@RequestBody PersonSaveDTO person) {
+        PersonDTO aux = iPersonService.savePerson(person);
+        URI location = URI.create("/persons/" + aux.getId());
+        return ResponseEntity.created(location).body(aux);
     }
 
     @PutMapping(value = "/update/{id}")
-    public String updatePerson(@PathVariable long id, @RequestBody PersonEntity person) {
-        return iPersonService.updatePerson(id, person);
+    public ResponseEntity<PersonDTO> updatePerson(@PathVariable Long id, @RequestBody PersonDTO person) {
+        return ResponseEntity.ok().body(iPersonService.updatePerson(id, person));
     }
 
     @DeleteMapping(value = "/delete/{id}")
-    public String deletePerson(@PathVariable long id) {
-        return iPersonService.deletePerson(id);
+    public ResponseEntity<String> deletePerson(@PathVariable Long id) {
+        return ResponseEntity.ok().body(iPersonService.deletePerson(id));
     }
-
 
 }

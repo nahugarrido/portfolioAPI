@@ -1,76 +1,110 @@
 package com.portfoliov2.app.portfolioAPI.person.service;
 
-import com.portfoliov2.app.portfolioAPI.exceptions.PortfolioExceptions;
+import com.portfoliov2.app.portfolioAPI.exceptions.PortfolioException;
+import com.portfoliov2.app.portfolioAPI.person.dto.PersonDTO;
+import com.portfoliov2.app.portfolioAPI.person.dto.PersonSaveDTO;
 import com.portfoliov2.app.portfolioAPI.person.entity.PersonEntity;
 import com.portfoliov2.app.portfolioAPI.person.repository.PersonRepository;
-import com.portfoliov2.app.portfolioAPI.social.service.ISocialService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ImpPersonService implements IPersonService {
 
     @Autowired
     PersonRepository personRepository;
-
     @Autowired
-    ISocialService iSocialService;
+    ModelMapper modelMapper;
+
+    ///@Autowired
+    ///ISocialService iSocialService;
 
     @Override
-    public List<PersonEntity> getPersons() {
+    public List<PersonDTO> getPersons() {
+        List<PersonEntity> listEntities = personRepository.findAll();
 
-        return personRepository.findAll();
-    }
+        List<PersonDTO> listDTO = new ArrayList<>();
 
-    @Override
-    public PersonEntity getPersonById(Long user_id) {
-        PersonEntity person = personRepository.findById(user_id).orElse(null);
-
-        if(person == null) {
-            throw new PortfolioExceptions("Person not found", HttpStatus.NOT_FOUND);
+        for(PersonEntity item : listEntities) {
+            PersonDTO aux = modelMapper.map(item, PersonDTO.class);
+            listDTO.add(aux);
         }
 
-        return person;
+        return listDTO;
     }
 
     @Override
-    public String savePerson(PersonEntity person) {
-        personRepository.save(person);
-        iSocialService.saveSocial(person.getId());
-        return "Saved person";
-    }
+    public PersonDTO getPersonById(Long user_id) {
+        Optional<PersonEntity> person = personRepository.findById(user_id);
 
-    @Override
-    public String updatePerson(long id, PersonEntity person) {
-        PersonEntity updatedPerson = personRepository.findById(id).orElse(null);
-
-        if(updatedPerson == null) {
-            throw new PortfolioExceptions("Person not found", HttpStatus.NOT_FOUND);
+        if(person.isEmpty()) {
+            throw new PortfolioException("Person not found", HttpStatus.NOT_FOUND);
         }
 
-        updatedPerson.setName(person.getName());
-        updatedPerson.setLastName(person.getLastName());
-        updatedPerson.setDescription(person.getDescription());
-        updatedPerson.setProfileImg(person.getProfileImg());
-        updatedPerson.setSeniority(person.getSeniority());
-        updatedPerson.setSkills(person.getSkills());
+        PersonDTO dto = modelMapper.map(person, PersonDTO.class);
 
-        personRepository.save(updatedPerson);
-        return "Updated person";
+        return dto;
     }
 
     @Override
-    public String deletePerson(long id) {
-        PersonEntity deletedPerson = personRepository.findById(id).orElse(null);
+    public PersonEntity getPersonEntityById(Long user_id) {
+        Optional<PersonEntity> person = personRepository.findById(user_id);
 
-        if(deletedPerson == null) {
-            throw new PortfolioExceptions("Person not found", HttpStatus.NOT_FOUND);
+        if(person.isEmpty()) {
+            throw new PortfolioException("Person not found", HttpStatus.NOT_FOUND);
         }
 
-        personRepository.delete(deletedPerson);
-        return "Deleted person";
+        return person.get();
+    }
+
+    @Override
+    public PersonDTO savePerson(PersonSaveDTO savedPerson) {
+        PersonEntity personEntity = modelMapper.map(savedPerson, PersonEntity.class);
+        personRepository.save(personEntity);
+        ///iSocialService.saveSocial(personEntity.getId());
+        PersonDTO dto = modelMapper.map(personEntity, PersonDTO.class);
+
+        return dto;
+    }
+
+    @Override
+    public PersonDTO updatePerson(Long id, PersonDTO person) {
+        Optional<PersonEntity> updatedPerson = personRepository.findById(id);
+
+        if(updatedPerson.isEmpty()) {
+            throw new PortfolioException("Person not found", HttpStatus.NOT_FOUND);
+        }
+
+        PersonEntity aux = updatedPerson.get();
+        aux.setName(person.getName());
+        aux.setLastName(person.getLastName());
+        aux.setDescription(person.getDescription());
+        aux.setProfile(person.getProfile());
+        aux.setBanner(person.getBanner());
+        aux.setSeniority(person.getSeniority());
+        personRepository.save(aux);
+
+        PersonDTO dto = modelMapper.map(aux, PersonDTO.class);
+        return dto;
+    }
+
+    @Override
+    public String deletePerson(Long id) {
+        Optional<PersonEntity> deletedPerson = personRepository.findById(id);
+
+        if(deletedPerson.isEmpty()) {
+            throw new PortfolioException("Person not found", HttpStatus.NOT_FOUND);
+        }
+
+        PersonEntity aux = deletedPerson.get();
+        personRepository.delete(aux);
+
+        return "Deleted Person with id " + aux.getId();
     }
 }

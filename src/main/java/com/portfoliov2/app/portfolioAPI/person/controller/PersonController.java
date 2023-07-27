@@ -3,7 +3,6 @@ package com.portfoliov2.app.portfolioAPI.person.controller;
 import com.portfoliov2.app.portfolioAPI.person.dto.PersonDTO;
 import com.portfoliov2.app.portfolioAPI.person.dto.PersonSaveDTO;
 import com.portfoliov2.app.portfolioAPI.person.service.IPersonService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +13,11 @@ import java.util.List;
 @RequestMapping("/persons")
 public class PersonController {
 
-    @Autowired
-    IPersonService iPersonService;
+    private final IPersonService iPersonService;
+
+    public PersonController(IPersonService iPersonService) {
+        this.iPersonService = iPersonService;
+    }
 
     @GetMapping
     public ResponseEntity<List<PersonDTO>> getPersons() {
@@ -41,7 +43,8 @@ public class PersonController {
 
     @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity<String> deletePerson(@PathVariable Long id) {
-        return ResponseEntity.ok().body(iPersonService.deletePerson(id));
+        iPersonService.deletePerson(id);
+        return ResponseEntity.ok().body("Person deleted.");
     }
 
 }

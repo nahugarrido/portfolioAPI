@@ -1,12 +1,11 @@
 package com.portfoliov2.app.portfolioAPI.experience.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.portfoliov2.app.portfolioAPI.person.entity.PersonEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -22,9 +21,7 @@ public class ExperienceEntity {
 
     private boolean hidden;
 
-    private int priority;
-
-    private String img;
+    private String image;
 
     private String company;
 
@@ -34,13 +31,11 @@ public class ExperienceEntity {
 
     // Date format = "2023-04-04"
     @Column(name = "start_date")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date startDate;
+    private LocalDate startDate;
 
     // Date format = "2023-04-04"
     @Column(name = "finish_date")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date finishDate;
+    private LocalDate finishDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore

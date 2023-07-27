@@ -1,73 +1,90 @@
 package com.portfoliov2.app.portfolioAPI.experience.service;
 
+import com.portfoliov2.app.portfolioAPI.experience.dto.ExperienceDTO;
+import com.portfoliov2.app.portfolioAPI.experience.dto.ExperienceSaveDTO;
 import com.portfoliov2.app.portfolioAPI.experience.entity.ExperienceEntity;
 import com.portfoliov2.app.portfolioAPI.experience.repository.ExperienceRepository;
 import com.portfoliov2.app.portfolioAPI.person.entity.PersonEntity;
 import com.portfoliov2.app.portfolioAPI.exceptions.PortfolioException;
 import com.portfoliov2.app.portfolioAPI.person.service.IPersonService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ImpExperienceService implements IExperienceService {
 
-    @Autowired
-    ExperienceRepository experienceRepository;
+    private final ExperienceRepository experienceRepository;
 
-    @Autowired
-    IPersonService iPersonService;
+    private final IPersonService iPersonService;
 
-    //Date format
-    //SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+    private final ModelMapper modelMapper;
 
-    @Override
-    public List<ExperienceEntity> getExperiences() {
-        return experienceRepository.findAll();
+    public ImpExperienceService(ExperienceRepository experienceRepository, IPersonService iPersonService, ModelMapper modelMapper) {
+        this.experienceRepository = experienceRepository;
+        this.iPersonService = iPersonService;
+        this.modelMapper = modelMapper;
     }
 
     @Override
-    public String saveExperience(ExperienceEntity experience, Long user_id) {
+    public List<ExperienceDTO> getExperiences() {
+        List<ExperienceEntity> entityList = experienceRepository.findAll();
+
+        List<ExperienceDTO> dtoList = new ArrayList<>();
+
+        for(ExperienceEntity item : entityList) {
+            ExperienceDTO aux = modelMapper.map(item, ExperienceDTO.class);
+            dtoList.add(aux);
+        }
+
+        return dtoList;
+    }
+
+    @Override
+    public ExperienceDTO saveExperience(ExperienceSaveDTO experience, Long user_id) {
         PersonEntity person = iPersonService.getPersonEntityById(user_id);
-        person.getExperiences().add(experience);
-        experience.setPerson(person);
-        experienceRepository.save(experience);
-        return "Saved experience";
+
+        ExperienceEntity experienceEntity = modelMapper.map(experience, ExperienceEntity.class);
+        experienceEntity.setPerson(person);
+        experienceRepository.save(experienceEntity);
+        return modelMapper.map(experienceEntity, ExperienceDTO.class);
     }
 
     @Override
-    public String updateExperience(long id, ExperienceEntity experience) {
-        ExperienceEntity updatedExperience = experienceRepository.findById(id).orElse(null);
+    public ExperienceDTO updateExperience(ExperienceDTO experience, Long id) {
+        Optional<ExperienceEntity> updatedExperience = experienceRepository.findById(id);
 
-        if(updatedExperience == null) {
+        if(updatedExperience.isEmpty()) {
             throw new PortfolioException("Experience not found", HttpStatus.NOT_FOUND);
         }
 
-        updatedExperience.setCompany(experience.getCompany());
-        updatedExperience.setDescription(experience.getDescription());
-        updatedExperience.setFinishDate(experience.getFinishDate());
-        updatedExperience.setImg(experience.getImg());
-        updatedExperience.setPosition(experience.getPosition());
-        updatedExperience.setHidden(experience.isHidden());
-        ///updatedExperience.setShow(experience.isShow());
-        updatedExperience.setStartDate(experience.getStartDate());
-        updatedExperience.setPriority(experience.getPriority());
+        ExperienceEntity aux = updatedExperience.get();
+        aux.setCompany(experience.getCompany());
+        aux.setDescription(experience.getDescription());
+        aux.setFinishDate(experience.getFinishDate());
+        aux.setImage(experience.getImage());
+        aux.setPosition(experience.getPosition());
+        aux.setHidden(experience.isHidden());
+        aux.setStartDate(experience.getStartDate());
 
-        experienceRepository.save(updatedExperience);
-        return "Updated experience";
+        experienceRepository.save(aux);
+
+        return modelMapper.map(aux, ExperienceDTO.class);
     }
 
     @Override
-    public String deleteExperience(long id) {
-        ExperienceEntity deletedExperience = experienceRepository.findById(id).orElse(null);
+    public void deleteExperience(Long id) {
+        Optional<ExperienceEntity> deletedExperience = experienceRepository.findById(id);
 
-        if(deletedExperience == null) {
+        if(deletedExperience.isEmpty()) {
             throw new PortfolioException("Experience not found", HttpStatus.NOT_FOUND);
         }
 
-        experienceRepository.delete(deletedExperience);
-        return "Deleted experience";
+        ExperienceEntity aux = deletedExperience.get();
+        experienceRepository.delete(aux);
     }
 }

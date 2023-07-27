@@ -1,8 +1,10 @@
 package com.portfoliov2.app.portfolioAPI.experience.controller;
 
+import com.portfoliov2.app.portfolioAPI.experience.dto.ExperienceDTO;
+import com.portfoliov2.app.portfolioAPI.experience.dto.ExperienceSaveDTO;
 import com.portfoliov2.app.portfolioAPI.experience.service.IExperienceService;
-import com.portfoliov2.app.portfolioAPI.experience.entity.ExperienceEntity;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,26 +12,30 @@ import java.util.List;
 @RestController
 @RequestMapping("/experiences")
 public class ExperienceController {
-    @Autowired
-    IExperienceService iExperienceService;
+    private final IExperienceService iExperienceService;
 
-    @GetMapping
-    public List<ExperienceEntity> getExperiences() {
-        return iExperienceService.getExperiences();
+    public ExperienceController(IExperienceService iExperienceService) {
+        this.iExperienceService = iExperienceService;
     }
 
-    @PostMapping(value = "/{user_id}/create")
-    public String saveExperience(@RequestBody ExperienceEntity experience, @PathVariable Long user_id) {
-        return iExperienceService.saveExperience(experience, user_id);
+    @GetMapping
+    public ResponseEntity<List<ExperienceDTO>> getExperiences() {
+        return ResponseEntity.status(HttpStatus.CREATED).body(iExperienceService.getExperiences());
+    }
+
+    @PostMapping(value = "/{userId}/create")
+    public ResponseEntity<ExperienceDTO> saveExperience(@RequestBody ExperienceSaveDTO experience, @PathVariable Long userId) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(iExperienceService.saveExperience(experience, userId));
     }
 
     @PutMapping(value = "/update/{id}")
-    public String updateExperience(@PathVariable long id, @RequestBody ExperienceEntity experience) {
-        return iExperienceService.updateExperience(id, experience);
+    public ResponseEntity<ExperienceDTO> updateExperience(@RequestBody ExperienceDTO experience, @PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(iExperienceService.updateExperience(experience, id));
     }
     @DeleteMapping(value = "/delete/{id}")
-    public String deleteExperience(@PathVariable long id) {
-        return iExperienceService.deleteExperience(id);
+    public ResponseEntity<String> deleteExperience(@PathVariable Long id) {
+        iExperienceService.deleteExperience(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Experience deleted.");
     }
 
 }

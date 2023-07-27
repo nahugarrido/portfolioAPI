@@ -6,7 +6,6 @@ import com.portfoliov2.app.portfolioAPI.person.dto.PersonSaveDTO;
 import com.portfoliov2.app.portfolioAPI.person.entity.PersonEntity;
 import com.portfoliov2.app.portfolioAPI.person.repository.PersonRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +16,15 @@ import java.util.Optional;
 @Service
 public class ImpPersonService implements IPersonService {
 
-    @Autowired
-    PersonRepository personRepository;
-    @Autowired
-    ModelMapper modelMapper;
+    private final PersonRepository personRepository;
 
-    ///@Autowired
-    ///ISocialService iSocialService;
+    private final ModelMapper modelMapper;
+
+    public ImpPersonService(PersonRepository personRepository, ModelMapper modelMapper) {
+        this.personRepository = personRepository;
+        this.modelMapper = modelMapper;
+    }
+
 
     @Override
     public List<PersonDTO> getPersons() {
@@ -47,9 +48,7 @@ public class ImpPersonService implements IPersonService {
             throw new PortfolioException("Person not found", HttpStatus.NOT_FOUND);
         }
 
-        PersonDTO dto = modelMapper.map(person, PersonDTO.class);
-
-        return dto;
+        return modelMapper.map(person, PersonDTO.class);
     }
 
     @Override
@@ -67,10 +66,8 @@ public class ImpPersonService implements IPersonService {
     public PersonDTO savePerson(PersonSaveDTO savedPerson) {
         PersonEntity personEntity = modelMapper.map(savedPerson, PersonEntity.class);
         personRepository.save(personEntity);
-        ///iSocialService.saveSocial(personEntity.getId());
-        PersonDTO dto = modelMapper.map(personEntity, PersonDTO.class);
 
-        return dto;
+        return modelMapper.map(personEntity, PersonDTO.class);
     }
 
     @Override
@@ -88,14 +85,16 @@ public class ImpPersonService implements IPersonService {
         aux.setProfile(person.getProfile());
         aux.setBanner(person.getBanner());
         aux.setSeniority(person.getSeniority());
+        aux.setEmail(person.getEmail());
+        aux.setGithub(person.getGithub());
+        aux.setLinkedin(person.getLinkedin());
         personRepository.save(aux);
 
-        PersonDTO dto = modelMapper.map(aux, PersonDTO.class);
-        return dto;
+        return modelMapper.map(aux, PersonDTO.class);
     }
 
     @Override
-    public String deletePerson(Long id) {
+    public void deletePerson(Long id) {
         Optional<PersonEntity> deletedPerson = personRepository.findById(id);
 
         if(deletedPerson.isEmpty()) {
@@ -104,7 +103,5 @@ public class ImpPersonService implements IPersonService {
 
         PersonEntity aux = deletedPerson.get();
         personRepository.delete(aux);
-
-        return "Deleted Person with id " + aux.getId();
     }
 }

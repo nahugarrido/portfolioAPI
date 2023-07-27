@@ -21,4 +21,10 @@ public class PersonDTO {
 
     /// banner image of the person
     private String banner;
+
+    private String github;
+
+    private String linkedin;
+
+    private String email;
 }

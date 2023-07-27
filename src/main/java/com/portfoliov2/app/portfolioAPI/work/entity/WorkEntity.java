@@ -1,4 +1,4 @@
-package com.portfoliov2.app.portfolioAPI.project.entity;
+package com.portfoliov2.app.portfolioAPI.work.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.portfoliov2.app.portfolioAPI.person.entity.PersonEntity;
@@ -6,18 +6,17 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-/// I'm using @Table and @Column as a good practice
 @Entity
 @Getter
 @Setter
-@Table(name = "project")
-public class ProjectEntity {
+@Table(name = "work")
+public class WorkEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String img;
+    private String image;
 
     private String repositoryLink;
 

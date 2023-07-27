@@ -1,11 +1,10 @@
 package com.portfoliov2.app.portfolioAPI.education.entity;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.portfoliov2.app.portfolioAPI.person.entity.PersonEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -21,21 +20,17 @@ public class EducationEntity {
 
     private String title;
 
-    private String img;
+    private String image;
 
     private String institution;
 
     private String description;
 
     // Date format = "2023-04-04"
-    @Column(name = "start_date")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date startDate;
+    private LocalDate startDate;
 
     // Date format = "2023-04-04"
-    @Column(name = "finish_date")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date finishDate;
+    private LocalDate finishDate;
 
     private boolean hidden;
 

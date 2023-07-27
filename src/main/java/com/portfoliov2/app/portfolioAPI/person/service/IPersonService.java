@@ -3,7 +3,6 @@ package com.portfoliov2.app.portfolioAPI.person.service;
 import com.portfoliov2.app.portfolioAPI.person.dto.PersonDTO;
 import com.portfoliov2.app.portfolioAPI.person.dto.PersonSaveDTO;
 import com.portfoliov2.app.portfolioAPI.person.entity.PersonEntity;
-import org.springframework.stereotype.Service;
 import java.util.List;
 
 public interface IPersonService {
@@ -21,6 +20,6 @@ public interface IPersonService {
     PersonDTO updatePerson(Long id, PersonDTO person);
 
     // Delete a person
-    String deletePerson(Long id);
+    void deletePerson(Long id);
 
 }

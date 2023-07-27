@@ -1,12 +1,10 @@
 package com.portfoliov2.app.portfolioAPI.person.entity;
 import com.portfoliov2.app.portfolioAPI.education.entity.EducationEntity;
 import com.portfoliov2.app.portfolioAPI.experience.entity.ExperienceEntity;
-import com.portfoliov2.app.portfolioAPI.project.entity.ProjectEntity;
-import com.portfoliov2.app.portfolioAPI.social.entity.SocialEntity;
+import com.portfoliov2.app.portfolioAPI.work.entity.WorkEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /// I'm using @Table and @Column as a good practice
@@ -36,13 +34,16 @@ public class PersonEntity {
     /// banner image of the person
     private String banner;
 
+    private String github;
+
+    private String linkedin;
+
+    private String email;
+
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<EducationEntity> educations;
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProjectEntity> projects;
+    private List<WorkEntity> projects;
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ExperienceEntity> experiences;
-    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
-    private SocialEntity social;
-
 }

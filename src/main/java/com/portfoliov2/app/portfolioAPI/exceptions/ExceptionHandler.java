@@ -9,9 +9,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class ExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(value = {PortfolioExceptions.class})
+    @org.springframework.web.bind.annotation.ExceptionHandler(value = {PortfolioException.class})
     protected ResponseEntity<Object> handleConflict(
-            PortfolioExceptions ex, WebRequest request) {
+            PortfolioException ex, WebRequest request) {
         String bodyOfResponse = ex.getMessage();
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), ex.getHttpStatus(), request);
     }
